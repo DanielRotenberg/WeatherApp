@@ -1,4 +1,4 @@
-package com.danirg10000gmail.weatherapp;
+package com.danirg10000gmail.weatherapp.weather;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,8 +8,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.danirg10000gmail.weatherapp.R;
+import com.danirg10000gmail.weatherapp.common.base.BaseActivity;
+import com.danirg10000gmail.weatherapp.weather.WeatherContract.Presenter;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity extends BaseActivity implements WeatherContract.View {
+
+  WeatherContract.Presenter presenter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -19,13 +24,8 @@ public class WeatherActivity extends AppCompatActivity {
     setSupportActionBar(toolbar);
 
     FloatingActionButton fab =  findViewById(R.id.fab);
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            .setAction("Action", null).show();
-      }
-    });
+    fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        .setAction("Action", null).show());
   }
 
   @Override
@@ -48,5 +48,20 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     return super.onOptionsItemSelected(item);
+  }
+
+  @Override
+  public void setPresenter(Presenter presenter) {
+    this.presenter = presenter;
+  }
+
+  @Override
+  public void showCity() {
+
+  }
+
+  @Override
+  public void showError() {
+
   }
 }
