@@ -5,27 +5,38 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.danirg10000gmail.weatherapp.R;
+import com.danirg10000gmail.weatherapp.common.WeatherApplication;
 import com.danirg10000gmail.weatherapp.common.base.BaseActivity;
 import com.danirg10000gmail.weatherapp.weather.WeatherContract.Presenter;
+import javax.inject.Inject;
 
 public class WeatherActivity extends BaseActivity implements WeatherContract.View {
 
+  @Inject
   WeatherContract.Presenter presenter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_weather);
-    Toolbar toolbar =  findViewById(R.id.toolbar);
+    Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
+    DaggerWeatherComponent.builder()
+        .weatherModule(new WeatherModule(this))
+        .singletonComponent(((WeatherApplication) getApplication()).getSingletonComponent())
+        .build()
+        .inject(this);
 
-    FloatingActionButton fab =  findViewById(R.id.fab);
-    fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-        .setAction("Action", null).show());
+    presenter.start();
+    FloatingActionButton fab = findViewById(R.id.fab);
+    fab.setOnClickListener(
+        view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            .setAction("Action", null).show());
   }
 
   @Override

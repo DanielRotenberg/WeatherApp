@@ -1,6 +1,6 @@
 package com.danirg10000gmail.weatherapp.common.injection.module;
 
-import android.app.Application;
+import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
@@ -11,15 +11,15 @@ import javax.inject.Singleton;
 @Module
 public class ApplicationModule {
 
-  Application weatherApplication;
+  Context weatherApplicationContext;
 
-  public ApplicationModule(Application weatherApplication) {
-    this.weatherApplication = weatherApplication;
+  public ApplicationModule(Context weatherApplicationContext) {
+    this.weatherApplicationContext = weatherApplicationContext;
   }
 
   @Provides
   @Singleton
-  Application provideApplication(){
-    return weatherApplication;
+  Context provideApplication(){
+    return weatherApplicationContext;
   }
 }

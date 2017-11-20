@@ -1,7 +1,9 @@
 package com.danirg10000gmail.weatherapp.common.injection.module;
 
-import android.app.Application;
+import android.content.Context;
+import com.danirg10000gmail.weatherapp.common.WeatherDataSource;
 import com.danirg10000gmail.weatherapp.common.WeatherEndPoint;
+import com.danirg10000gmail.weatherapp.common.WeatherRemoteDataSource;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dagger.Module;
@@ -25,7 +27,13 @@ public class NetworkModule {
 
   @Provides
   @Singleton
-  Cache provideOkHttpCashe(Application application) {
+  WeatherDataSource provideWeatherRemoteDataSource(WeatherEndPoint endPoint){
+    return new WeatherRemoteDataSource(endPoint);
+  }
+
+  @Provides
+  @Singleton
+  Cache provideOkHttpCashe(Context application) {
     int cacheSize = 10 * 1024 * 1024; // 10 MiB
     Cache cache = new Cache(application.getCacheDir(), cacheSize);
     return cache;
@@ -62,7 +70,6 @@ public class NetworkModule {
   @Singleton
   WeatherEndPoint provideWeatherEndPoint(Retrofit retrofit){
     return retrofit.create(WeatherEndPoint.class);
-
   }
 
 }
