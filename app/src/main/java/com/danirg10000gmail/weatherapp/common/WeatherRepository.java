@@ -24,7 +24,19 @@ public class WeatherRepository implements WeatherDataSource {
   }
 
   @Override
-  public void getCityById(int id) {
+  public void getCityByName(String name, GetWeatherForCityCallback callback) {
+    remoteDataSource.getCityByName(name,callback);
 
   }
+
+
+  @Override
+  public void getCityByLocation(double lat, double lot,
+      GetCurrentLocationWeatherCallback callback) {
+
+    remoteDataSource.getCityByLocation(lat, lot, callback );
+
+  }
+
+
 }

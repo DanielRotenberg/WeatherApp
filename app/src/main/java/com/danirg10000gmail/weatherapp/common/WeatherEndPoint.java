@@ -10,9 +10,10 @@ import retrofit2.http.Query;
  */
 
 public interface WeatherEndPoint {
-  @GET("weather")
-  Call<City> getWeather(@Query("q") String cityName);
 
   @GET("weather")
-  Call<City> getWeather(@Query("lat") double lat, @Query("lon") double lon);
+  Call<City> getWeatherByCityName(@Query("q") String cityName,@Query ("APPID") String apiKey);
+
+  @GET("weather")
+  Call<City> getWeatherByLocation(@Query("lat") double lat, @Query("lon") double lon,@Query ("APPID") String apiKey);
 }

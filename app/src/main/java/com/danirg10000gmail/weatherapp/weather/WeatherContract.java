@@ -15,10 +15,14 @@ public interface WeatherContract {
 
     void showError();
 
+    void showCurrentLocationWeather(String weather);
+
   }
 
   interface Presenter extends BasePresenter {
 
     void getCity();
+
+    void getWeatherForLocation(double lat, double lot);
   }
 }

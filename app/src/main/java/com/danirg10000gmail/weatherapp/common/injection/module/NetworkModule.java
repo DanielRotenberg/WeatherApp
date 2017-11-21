@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkModule {
 
   private static final String BASE_URL =  "http://api.openweathermap.org/data/2.5/";
-  private static final String API_KEY = "03cb2bee2a27a5ff22edead241cbd638";
+  public static final String API_KEY = "03cb2bee2a27a5ff22edead241cbd638";
 
 
   @Provides

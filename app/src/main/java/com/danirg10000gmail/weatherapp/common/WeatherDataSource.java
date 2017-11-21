@@ -12,6 +12,23 @@ public interface WeatherDataSource {
 
   List<City> getCities();
 
-  void getCityById(int id);
+  void getCityByName(String name, GetWeatherForCityCallback callback);
+
+  void getCityByLocation(double lat, double lot,GetCurrentLocationWeatherCallback callback );
+
+  interface GetCurrentLocationWeatherCallback{
+
+    void onSuccess(String weather);
+
+    void onError();
+
+  }
+
+  interface GetWeatherForCityCallback{
+
+    void onSuccess(City city);
+
+    void onError();
+  }
 
 }
