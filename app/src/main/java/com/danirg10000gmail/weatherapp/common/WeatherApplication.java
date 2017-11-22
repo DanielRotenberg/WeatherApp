@@ -5,6 +5,7 @@ import com.danirg10000gmail.weatherapp.common.injection.component.DaggerSingleto
 import com.danirg10000gmail.weatherapp.common.injection.component.SingletonComponent;
 import com.danirg10000gmail.weatherapp.common.injection.module.ApplicationModule;
 import com.danirg10000gmail.weatherapp.common.injection.module.NetworkModule;
+import com.danirg10000gmail.weatherapp.common.model.WeatherDataSourceModel;
 
 /**
  * Created by DanielR on 17/11/2017.

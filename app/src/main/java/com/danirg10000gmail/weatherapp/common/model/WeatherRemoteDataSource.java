@@ -1,10 +1,8 @@
-package com.danirg10000gmail.weatherapp.common;
+package com.danirg10000gmail.weatherapp.common.model;
 
-import android.util.Log;
-
+import com.danirg10000gmail.weatherapp.common.WeatherEndPoint;
 import com.danirg10000gmail.weatherapp.common.data.Area;
 import com.danirg10000gmail.weatherapp.common.data.City;
-import com.danirg10000gmail.weatherapp.common.injection.module.NetworkModule;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;

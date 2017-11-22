@@ -1,9 +1,9 @@
 package com.danirg10000gmail.weatherapp.common.injection.module;
 
 import android.content.Context;
-import com.danirg10000gmail.weatherapp.common.WeatherDataSource;
+import com.danirg10000gmail.weatherapp.common.model.WeatherDataSource;
 import com.danirg10000gmail.weatherapp.common.WeatherEndPoint;
-import com.danirg10000gmail.weatherapp.common.WeatherRemoteDataSource;
+import com.danirg10000gmail.weatherapp.common.model.WeatherRemoteDataSource;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dagger.Module;

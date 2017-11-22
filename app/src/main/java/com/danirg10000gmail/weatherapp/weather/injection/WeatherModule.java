@@ -1,7 +1,11 @@
-package com.danirg10000gmail.weatherapp.weather;
+package com.danirg10000gmail.weatherapp.weather.injection;
 
 import android.content.Context;
 
+import com.danirg10000gmail.weatherapp.weather.WeatherContract.Presenter;
+import com.danirg10000gmail.weatherapp.weather.WeatherContract.View;
+import com.danirg10000gmail.weatherapp.weather.WeatherPresenter;
+import com.danirg10000gmail.weatherapp.weather.injection.PerActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import dagger.Module;
@@ -14,21 +18,21 @@ import dagger.Provides;
 @Module
 public class WeatherModule {
 
-  WeatherContract.View view;
+  View view;
 
-  public WeatherModule(WeatherContract.View view) {
+  public WeatherModule(View view) {
     this.view = view;
   }
 
 
   @Provides
   @PerActivity
-  WeatherContract.View provideWeatherView(){
+  View provideWeatherView(){
     return view;
   }
 
   @Provides
-  WeatherContract.Presenter provideWeatherPresenter(WeatherPresenter weatherPresenter){
+  Presenter provideWeatherPresenter(WeatherPresenter weatherPresenter){
     return weatherPresenter;
 
   }

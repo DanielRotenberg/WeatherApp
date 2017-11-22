@@ -1,12 +1,13 @@
 package com.danirg10000gmail.weatherapp.weather;
 
 
-import com.danirg10000gmail.weatherapp.common.WeatherDataSource;
-import com.danirg10000gmail.weatherapp.common.WeatherDataSource.GetCurrentLocationWeatherCallback;
-import com.danirg10000gmail.weatherapp.common.WeatherDataSource.GetWeatherForCityCallback;
-import com.danirg10000gmail.weatherapp.common.WeatherRepository;
+import com.danirg10000gmail.weatherapp.common.model.WeatherDataSource;
+import com.danirg10000gmail.weatherapp.common.model.WeatherDataSource.GetCurrentLocationWeatherCallback;
+import com.danirg10000gmail.weatherapp.common.model.WeatherDataSource.GetWeatherForCityCallback;
+import com.danirg10000gmail.weatherapp.common.model.WeatherRepository;
 import com.danirg10000gmail.weatherapp.common.data.City;
 
+import com.danirg10000gmail.weatherapp.weather.injection.PerActivity;
 import java.util.List;
 
 import javax.inject.Inject;

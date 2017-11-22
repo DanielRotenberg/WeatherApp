@@ -9,8 +9,6 @@ import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,9 +23,11 @@ import com.danirg10000gmail.weatherapp.R;
 import com.danirg10000gmail.weatherapp.common.WeatherApplication;
 import com.danirg10000gmail.weatherapp.common.base.BaseActivity;
 import com.danirg10000gmail.weatherapp.common.data.City;
+import com.danirg10000gmail.weatherapp.utils.DialogUtils;
 import com.danirg10000gmail.weatherapp.weather.WeatherContract.Presenter;
+import com.danirg10000gmail.weatherapp.weather.injection.DaggerWeatherComponent;
+import com.danirg10000gmail.weatherapp.weather.injection.WeatherModule;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 
 import java.util.List;
 
@@ -114,7 +114,7 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.Vie
 
   @Override
   public void showCurrentLocationWeather(String weather) {
-    showDialog("Weather for current location",weather);
+    DialogUtils.showAlertDialog(this,"Weather for current location",weather);
   }
 
   private boolean locationPermissionGranted(){
@@ -162,7 +162,7 @@ private void getUserLocation(){
         boolean showRationale = shouldShowRequestPermissionRationale(permission.ACCESS_COARSE_LOCATION);
 
         if (showRationale) {
-          // do something here to handle degraded mode
+          // do something here to handle degraded mode currently not implemented
         } else {
           Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
         }
@@ -171,18 +171,5 @@ private void getUserLocation(){
       super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
   }
-  private void showDialog(String title, String message){
-    AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-    alertDialog.setTitle(title);
-    alertDialog.setMessage(message);
-    // Alert dialog button
-    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-            (dialog, which) -> {
-              // Alert dialog action goes here
-              // onClick button code here
-              dialog.dismiss();// use dismiss to cancel alert dialog
-            });
-    alertDialog.show();
-  }
-
+  
 }

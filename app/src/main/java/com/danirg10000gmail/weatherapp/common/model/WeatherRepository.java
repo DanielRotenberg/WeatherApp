@@ -1,4 +1,4 @@
-package com.danirg10000gmail.weatherapp.common;
+package com.danirg10000gmail.weatherapp.common.model;
 
 import com.danirg10000gmail.weatherapp.common.data.City;
 import java.util.List;

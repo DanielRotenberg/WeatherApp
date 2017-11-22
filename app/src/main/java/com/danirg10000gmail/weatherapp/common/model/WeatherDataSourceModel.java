@@ -1,4 +1,4 @@
-package com.danirg10000gmail.weatherapp.common;
+package com.danirg10000gmail.weatherapp.common.model;
 
 import dagger.Module;
 import dagger.Provides;
