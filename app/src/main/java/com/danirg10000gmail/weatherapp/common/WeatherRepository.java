@@ -24,6 +24,12 @@ public class WeatherRepository implements WeatherDataSource {
   }
 
   @Override
+  public void getCitesListById(String id, getWeatherForCitiesListCallback callback) {
+    remoteDataSource.getCitesListById(id, callback);
+
+  }
+
+  @Override
   public void getCityByName(String name, GetWeatherForCityCallback callback) {
     remoteDataSource.getCityByName(name,callback);
 

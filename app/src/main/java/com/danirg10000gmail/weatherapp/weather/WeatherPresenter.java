@@ -1,11 +1,14 @@
 package com.danirg10000gmail.weatherapp.weather;
 
 
-import android.util.Log;
+import com.danirg10000gmail.weatherapp.common.WeatherDataSource;
 import com.danirg10000gmail.weatherapp.common.WeatherDataSource.GetCurrentLocationWeatherCallback;
 import com.danirg10000gmail.weatherapp.common.WeatherDataSource.GetWeatherForCityCallback;
 import com.danirg10000gmail.weatherapp.common.WeatherRepository;
 import com.danirg10000gmail.weatherapp.common.data.City;
+
+import java.util.List;
+
 import javax.inject.Inject;
 
 
@@ -26,25 +29,24 @@ public class WeatherPresenter implements WeatherContract.Presenter {
 
   @Override
   public void start() {
-
-    weatherView.showCity();
-    getCity();
+    getListOfCities();
   }
 
+  //currently not used
   @Override
   public void getCity() {
-  weatherRepository.getCityByName("london", new GetWeatherForCityCallback() {
-    @Override
-    public void onSuccess(City city) {
 
-    }
+    weatherRepository.getCityByName("london", new GetWeatherForCityCallback() {
+      @Override
+      public void onSuccess(City city) {
 
-    @Override
-    public void onError() {
+      }
 
-
-    }
-  });
+      @Override
+      public void onError() {
+        weatherView.showError();
+      }
+    });
   }
 
   @Override
@@ -57,8 +59,25 @@ public class WeatherPresenter implements WeatherContract.Presenter {
 
       @Override
       public void onError() {
-
+        weatherView.showError();
       }
     });
+  }
+
+  @Override
+  public void getListOfCities() {
+    String citiesIdList = "524901,703448,2643743";
+    weatherRepository
+        .getCitesListById(citiesIdList, new WeatherDataSource.getWeatherForCitiesListCallback() {
+          @Override
+          public void onSuccess(List<City> cities) {
+            weatherView.showCitiesList(cities);
+          }
+
+          @Override
+          public void onError() {
+            weatherView.showError();
+          }
+        });
   }
 }

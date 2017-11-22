@@ -1,7 +1,6 @@
 package com.danirg10000gmail.weatherapp.common;
 
 import android.app.Application;
-import android.util.Log;
 import com.danirg10000gmail.weatherapp.common.injection.component.DaggerSingletonComponent;
 import com.danirg10000gmail.weatherapp.common.injection.component.SingletonComponent;
 import com.danirg10000gmail.weatherapp.common.injection.module.ApplicationModule;
@@ -23,7 +22,6 @@ public class WeatherApplication extends Application {
         .applicationModule(new ApplicationModule(this))
         .networkModule(new NetworkModule())
         .weatherDataSourceModel(new WeatherDataSourceModel()).build();
-    Log.e("jira", "onCreate: null? "+(singletonComponent==null) );
 
   }
 

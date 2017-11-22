@@ -1,5 +1,6 @@
 package com.danirg10000gmail.weatherapp.common.injection.component;
 
+import android.content.Context;
 import com.danirg10000gmail.weatherapp.common.WeatherDataSource;
 import com.danirg10000gmail.weatherapp.common.WeatherDataSourceModel;
 import com.danirg10000gmail.weatherapp.common.WeatherRepository;
@@ -16,5 +17,7 @@ import javax.inject.Singleton;
 public interface SingletonComponent {
 
   WeatherRepository getWeatherRepository();
+
+  Context getApplicationContext();
 
 }

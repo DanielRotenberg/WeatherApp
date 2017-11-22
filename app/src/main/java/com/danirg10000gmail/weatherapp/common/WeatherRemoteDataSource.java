@@ -1,5 +1,8 @@
 package com.danirg10000gmail.weatherapp.common;
 
+import android.util.Log;
+
+import com.danirg10000gmail.weatherapp.common.data.Area;
 import com.danirg10000gmail.weatherapp.common.data.City;
 import com.danirg10000gmail.weatherapp.common.injection.module.NetworkModule;
 import java.util.List;
@@ -8,6 +11,8 @@ import javax.inject.Singleton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.danirg10000gmail.weatherapp.common.injection.module.NetworkModule.*;
 
 /**
  * Created by DanielR on 20/11/2017.
@@ -28,8 +33,26 @@ public class WeatherRemoteDataSource implements WeatherDataSource {
   }
 
   @Override
+  public void getCitesListById(String id, getWeatherForCitiesListCallback callback) {
+    Call<Area> call = weatherEndPoint.getWeatherForCities(id,UNITS,API_KEY);
+    call.enqueue(new Callback<Area>() {
+      @Override
+      public void onResponse(Call<Area> call, Response<Area> response) {
+        List<City> listResult = response.body().getCitiesList();
+        callback.onSuccess(listResult);
+      }
+
+      @Override
+      public void onFailure(Call<Area> call, Throwable t) {
+        callback.onError();
+      }
+    });
+
+  }
+
+  @Override
   public void getCityByName(String name, GetWeatherForCityCallback callback) {
-    Call<City> call = weatherEndPoint.getWeatherByCityName(name, NetworkModule.API_KEY);
+    Call<City> call = weatherEndPoint.getWeatherByCityName(name, API_KEY);
     call.enqueue(new Callback<City>() {
       @Override
       public void onResponse(Call<City> call, Response<City> response) {
@@ -50,7 +73,7 @@ public class WeatherRemoteDataSource implements WeatherDataSource {
   @Override
   public void getCityByLocation(double lat, double lot,
       GetCurrentLocationWeatherCallback callback) {
-    Call<City> call = weatherEndPoint.getWeatherByLocation(lat, lot, NetworkModule.API_KEY);
+    Call<City> call = weatherEndPoint.getWeatherByLocation(lat, lot, API_KEY);
 
     call.enqueue(new Callback<City>() {
       @Override

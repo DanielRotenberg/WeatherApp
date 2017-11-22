@@ -18,13 +18,3 @@ public class WeatherDataSourceModel {
   }
 
 }
-/*
-   @Singleton
-    @Provides
-    WeatherRepository provideWeatherRepository(@Local WeatherDataSource localDataSource,
-                                               @Remote WeatherDataSource remoteDataSource) {
-        return new WeatherRepository(localDataSource, remoteDataSource);
-    }
-
-
- */

@@ -1,6 +1,7 @@
 package com.danirg10000gmail.weatherapp.common;
 
 import com.danirg10000gmail.weatherapp.common.data.City;
+
 import java.util.List;
 
 /**
@@ -10,25 +11,34 @@ import java.util.List;
 public interface WeatherDataSource {
 
 
-  List<City> getCities();
+    List<City> getCities();
 
-  void getCityByName(String name, GetWeatherForCityCallback callback);
+    void getCitesListById(String id, getWeatherForCitiesListCallback callback);
 
-  void getCityByLocation(double lat, double lot,GetCurrentLocationWeatherCallback callback );
+    void getCityByName(String name, GetWeatherForCityCallback callback);
 
-  interface GetCurrentLocationWeatherCallback{
+    void getCityByLocation(double lat, double lot, GetCurrentLocationWeatherCallback callback);
 
-    void onSuccess(String weather);
+    interface GetCurrentLocationWeatherCallback {
 
-    void onError();
+        void onSuccess(String weather);
 
-  }
+        void onError();
 
-  interface GetWeatherForCityCallback{
+    }
 
-    void onSuccess(City city);
+    interface GetWeatherForCityCallback {
 
-    void onError();
-  }
+        void onSuccess(City city);
+
+        void onError();
+    }
+
+    interface getWeatherForCitiesListCallback {
+
+        void onSuccess(List<City> cities);
+
+        void onError();
+    }
 
 }

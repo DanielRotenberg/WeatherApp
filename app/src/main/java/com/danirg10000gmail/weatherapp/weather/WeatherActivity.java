@@ -5,7 +5,6 @@ import android.Manifest.permission;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,17 +12,24 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.Toast;
 import com.danirg10000gmail.weatherapp.R;
 import com.danirg10000gmail.weatherapp.common.WeatherApplication;
 import com.danirg10000gmail.weatherapp.common.base.BaseActivity;
+import com.danirg10000gmail.weatherapp.common.data.City;
 import com.danirg10000gmail.weatherapp.weather.WeatherContract.Presenter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -34,29 +40,38 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.Vie
   @Inject
   WeatherContract.Presenter presenter;
 
-  private FusedLocationProviderClient locationProvider;
+  @Inject
+  FusedLocationProviderClient locationProvider;
+
+  private Button currentLocationWeatherButton;
+
+  private RecyclerView weatherRecycler;
 
   @TargetApi(VERSION_CODES.M)
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_weather);
+    initWidgets();
+    initDaggerInjection();
+    presenter.start();
+    currentLocationWeatherButton.setOnClickListener(view -> getUserLocation() );
+  }
+
+  private void initWidgets(){
     Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
+    weatherRecycler = findViewById(R.id.weather_activity_recyclerView);
+    currentLocationWeatherButton = findViewById(R.id.weather_activity_location_weather_button);
+
+  }
+  private void initDaggerInjection(){
     DaggerWeatherComponent.builder()
         .weatherModule(new WeatherModule(this))
         .singletonComponent(((WeatherApplication) getApplication()).getSingletonComponent())
         .build()
         .inject(this);
 
-    presenter.start();
-    locationProvider =  LocationServices.getFusedLocationProviderClient(this);
-    getUserLocation();
-
-    FloatingActionButton fab = findViewById(R.id.fab);
-    fab.setOnClickListener(
-        view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            .setAction("Action", null).show());
   }
 
   @Override
@@ -87,18 +102,19 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.Vie
   }
 
   @Override
-  public void showCity() {
-
+  public void showCitiesList(List<City> citiesList) {
+   weatherRecycler.setAdapter(new WeatherAdapter(citiesList));
+   weatherRecycler.setLayoutManager(new LinearLayoutManager(this));
   }
 
   @Override
   public void showError() {
-
+    Toast.makeText(this, "Some error occurred", Toast.LENGTH_SHORT).show();
   }
 
   @Override
   public void showCurrentLocationWeather(String weather) {
-    Toast.makeText(this,weather,Toast.LENGTH_LONG).show();
+    showDialog("Weather for current location",weather);
   }
 
   private boolean locationPermissionGranted(){
@@ -140,7 +156,7 @@ private void getUserLocation(){
     if (requestCode == LOCATION_PERMISSIONS_REQUEST) {
       if (grantResults.length == 1 &&
           grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-        Toast.makeText(this, "Read Contacts permission granted", Toast.LENGTH_SHORT).show();
+        getUserLocation();
       } else {
         // showRationale = false if user clicks Never Ask Again, otherwise true
         boolean showRationale = shouldShowRequestPermissionRationale(permission.ACCESS_COARSE_LOCATION);
@@ -148,13 +164,25 @@ private void getUserLocation(){
         if (showRationale) {
           // do something here to handle degraded mode
         } else {
-          Toast.makeText(this, "Read Contacts permission denied", Toast.LENGTH_SHORT).show();
+          Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
         }
       }
     } else {
       super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
   }
-
+  private void showDialog(String title, String message){
+    AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+    alertDialog.setTitle(title);
+    alertDialog.setMessage(message);
+    // Alert dialog button
+    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+            (dialog, which) -> {
+              // Alert dialog action goes here
+              // onClick button code here
+              dialog.dismiss();// use dismiss to cancel alert dialog
+            });
+    alertDialog.show();
+  }
 
 }
